@@ -1,6 +1,7 @@
 import React from 'react';
 import ListItem from './List_Item';
 
+
 function List ({ notes, isFiltered, onDeleted, onDeletedTag, onEdited }) {
 
     const note = notes.map(
@@ -18,6 +19,7 @@ function List ({ notes, isFiltered, onDeleted, onDeletedTag, onEdited }) {
             />
         );
 
+        
     return (
         <ul className="list-of-notes">
             { note }

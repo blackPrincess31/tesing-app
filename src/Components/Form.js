@@ -2,18 +2,41 @@ import React, { useState, useEffect } from 'react';
 import { customAlphabet } from "nanoid";
 import List from './List';
 import TagFilter from "./tag-filter";
-
 import ListAddNote from "./ListAddNote";
-
-const data = [];
 
 function Form() {
 
-    const [notes, setNotes] = useState(data);
+   const useLocalStorage = (key, defaultValue) => {
+
+        const [storedValue, setStoredValue] = useState(() => {
+          try {
+            const value = window.localStorage.getItem(key);
+      
+            if (value) {
+              return JSON.parse(value);
+            } else {
+              window.localStorage.setItem(key, JSON.stringify(defaultValue));
+              return defaultValue;
+            }
+          } catch (err) {
+            return defaultValue;
+          }
+        });
+      
+        const setValue = newValue => {
+          try {
+            window.localStorage.setItem(key, JSON.stringify(newValue));
+          } catch (err) {}
+          setStoredValue(newValue);
+        };
+      
+        return [storedValue, setValue];
+      };
+
+    const [notes, setNotes] = useLocalStorage('notes');
     const [isFiltered, setIsFiltered] = useState(false);
     const [notesBeforeFilter, setNotesBeforeFilter] = useState([]);
 
-    
     const tags = new Set();
     
     const nanoid = customAlphabet('0123456789', 5);
@@ -111,9 +134,22 @@ function Form() {
         setIsFiltered(false);
     }
 
+
     useEffect(() => {
         document.title = `My_Notes: ${notes.length}`;
     });
+
+    // useEffect(() => {
+    //     localStorage.setItem('notes', JSON.stringify(notes));
+    //   }, [notes]);
+
+
+    //   useEffect(() => {
+    //     const note = JSON.parse(localStorage.getItem('notes'));
+    //     if (notes) {
+    //      setNotes(notes);
+    //     }
+    //   }, []);
 
   
         return (
