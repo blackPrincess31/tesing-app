@@ -20,7 +20,7 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
             <div className="list-of-notes__tag-and-button">
                 <span>{ item }</span>
                 <hr className="vertical-line" />
-                <button onClick={ onDeletedTag } value={ item }>X</button>
+                <button onClick={ onDeletedTag } value={ item }>delete_tag</button>
             </div>
         ));
 
@@ -36,7 +36,7 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
             <li className="list-of-notes__note">
                 <div className="list-of-notes__buttons-container">
                     <button onClick={() => setIsEditing(true)}>edit</button>
-                    <button onClick={ onDeleted }>X</button>
+                    <button onClick={ onDeleted }>delete</button>
                 </div>
                 <p className="list-of-notes__note-text">{ note }</p>
                 <hr />
