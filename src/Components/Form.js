@@ -142,7 +142,7 @@ function Form() {
         return (
 
             <div className="container">
-            <h1> My test Application</h1>
+            <h1> My testing_app</h1>
              <ListAddNote
                 onAdded={ AddNote }
                 isFiltered={ isFiltered }

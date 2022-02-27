@@ -17,14 +17,16 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
 
     const tagsFormatted = [];
     tags.forEach(item => tagsFormatted.push(
-            <div className="list">
-                <span>{ item }</span>
+        <div>
+            <li >
+                <span className='tags'>{ item }</span>
                 <button  className='btn' onClick={ onDeletedTag } value={ item }>delete_tag</button>
-            </div>
+            </li>
+        </div>
         ));
 
     const tagsFormattedWithConditionalRendering = (tagsFormatted.length > 0) ?
-            <div className="list">
+            <div>
                 { tagsFormatted }
             </div>
         :
@@ -32,28 +34,29 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
 
     if (isFiltered === false && isEditing === false) {
         return (
-            <li className="list-of-notes__note">
-                <div className="list">
+            <li >
+                <div >
                     <button className='btn' onClick={() => setIsEditing(true)}>edit</button>
                     <button className='btn' onClick={ onDeleted }>delete</button>
                 </div>
-                <p className="list">{ note }</p>
-                <hr />
+                <p >{ note }</p>
+                <span>
                 { tagsFormattedWithConditionalRendering }
+                </span>
             </li>
         );
     }
 
     if (isFiltered === false && isEditing === true) {
         return (
-            <li className="list">
+            <li >
                 <form onSubmit={HandleSubmit}>
                 <textarea
                     placeholder="Type in new text here"
                     value={newTextOfNote}
                     onChange={HandleChange}
                 />
-                <div className="list">
+                <div>
                     <input  type="submit" value="Save"/>
                     <button onClick={() => setIsEditing(false)}>Cancel</button>
                 </div>
@@ -68,11 +71,11 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
 
         return (
             <li>
-                <p className="list">{ note }</p>
+                <p >{ note }</p>
                 <hr />
-                <div className="list">
+                <li>
                     { tagsFormattedWhenFiltered }
-                </div>
+                </li>
             </li>
         );
     }
