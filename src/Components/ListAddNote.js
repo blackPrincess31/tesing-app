@@ -30,7 +30,7 @@ const ListAddNote = ({ onAdded, isFiltered }) => {
                 value={input}
                 onChange={OnTextChanged}
             />
-            <button>+</button>
+            <button>add</button>
         </form>
     );
 }

@@ -112,7 +112,7 @@ function Form() {
     }
 
     useEffect(() => {
-        document.title = `Кол-во заметок: ${notes.length}`;
+        document.title = `My_Notes: ${notes.length}`;
     });
 
   
