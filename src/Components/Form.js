@@ -1,67 +1,178 @@
-import React, { useState } from 'react';
-import Post from './Post'
+import React, { useState, useEffect } from 'react';
+import { customAlphabet } from "nanoid";
+import List from './List';
+import TagFilter from "./tag-filter";
+
+import ListAddNote from "./ListAddNote";
+
 
 function Form() {
 
-    const [value, setValue] = useState('');
-    // const [tag, setTag] = useState('');
-    const [data, setData] = useState([]);
-    // const [note, setNote] = useState([]);
-    // const [json, setJson] = useState(null);
-    const [editIndex, setEditIndex] = useState(null);
+    // const [value, setValue] = useState('');
+    // // const [tag, setTag] = useState('');
+    // const [data, setData] = useState([]);
+    // // const [note, setNote] = useState([]);
+    // // const [json, setJson] = useState(null);
+    // const [editIndex, setEditIndex] = useState(null);
 
+    const [notes, setNotes] = useState(data);
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [notesBeforeFilter, setNotesBeforeFilter] = useState([]);
 
-    function add(e) {
+    // function add(e) {
+    //     e.preventDefault();
+    //     setData([...data, value]);
+    // }
+    const data = [];
+
+    const tags = new Set();
+    // generate unique id
+    const nanoid = customAlphabet('0123456789', 5);
+    // fill the set with unique tag values from 'notes'
+    notes.forEach(item =>
+        item.tags.forEach(item => tags.add(item))
+    );
+        
+    function ejectHashtagsFromText (text) {
+
+        const regexAvoidOnlyHashTags = /[^#]/g;
+        return text.match(regexAvoidOnlyHashTags).join('');
+    }
+    
+    function findHashtags (text) {
+        const regexHashtags = /#\S*/ig;
+        const hashtags = text.match(regexHashtags);
+    
+        return hashtags ? hashtags : [];
+    }
+
+    const AddNote = (text) => {
+        const notesWithNewItem = [...notes];
+
+        notesWithNewItem.push({
+            id: parseInt(nanoid()),
+            note: ejectHashtagsFromText(text),
+            tags: findHashtags(text)
+        });
+
+        setNotes(notesWithNewItem);
+    };
+
+    const EditNote = (id, newText) => {
+       
+        const newNotesArray = [];
+
+        notes.map(item => {
+            if (id === item.id) {
+                return newNotesArray.push({
+                    id,
+                    note: ejectHashtagsFromText(newText),
+                    tags: findHashtags(newText)
+                });
+            }
+            return newNotesArray.push(item);
+        });
+
+        setNotes(newNotesArray);
+    };
+
+    const DeleteNote = (id) => {
+
+        const indexOfItemToDelete = notes.findIndex(item => item.id === id);
+        const notesWithoutDeletedItem = 
+        [
+            ...notes.slice(0, indexOfItemToDelete),
+            ...notes.slice(indexOfItemToDelete + 1)
+        ];
+
+        setNotes(notesWithoutDeletedItem);
+    };
+
+    const DeleteTag = (id, e) => {
         e.preventDefault();
-        setData([...data, value]);
+        const notesCopy = [...notes];
+        const hashtagToDelete = e.target.value;
+        const indexOfItemWithTagToDelete = notes.findIndex(item => item.id === id);
+        // filter out deleted tag
+        notesCopy[indexOfItemWithTagToDelete]["tags"] =
+            notes[indexOfItemWithTagToDelete]["tags"].filter(item => item !== hashtagToDelete);
 
-    }
+        setNotes(notesCopy);
+    };
 
-    function inputValue(e) {
-        setValue(e.target.value);
-    }
+    const FilterNotes = (value) => {
+        setNotesBeforeFilter(notes);
 
-    function remove(index) {
-        setData([...data.slice(0, index), ...data.slice(index + 1)]);
-    }
-
-    function changeValue(e) {         // изменение содержания поля input
-        setValue(e.target.value);
-    }
-
-    const edit = ({ value, setValue }) => {
-    const onChange = (e) => setValue(e.target.value);
-    return (
-        <input
-          type="text"
-          aria-label="Field name"
-          value={value}
-          onChange={onChange}
-        />
-      )
-    }
-
-
-        //  function edit(e) {  
-        //                                         // редактирование элемента
-        //     setValue(
-        //        [
-        //           ...data.slice(0, editIndex), 
-        //           e.target.value,
-        //           ...data.slice(editIndex + 1)
-        //        ]
-        //     ); 
-        //     setEditIndex(null);
-        //  }
-
-
-        function changeValue(e) {            // изменение содержания поля input
-            setValue(e.target.value);
+        const notesCopy = [...notes];
+        const arrOfFilteredValues = [];
+        const filteredData = [];
+        notesCopy.map(item => arrOfFilteredValues.push(item.tags.filter(item => item === value)));
+        for (let i = 0; i < notesCopy.length; i++) {
+            if (arrOfFilteredValues[i].length > 0) {
+                filteredData.push(notesCopy[i])
+            }
         }
 
-        function handleActive(item) {
-            setValue(item);
-        };
+        setIsFiltered(true);
+        setNotes(filteredData);
+    }
+
+    const ResetFilter = () => {
+        setNotes(notesBeforeFilter);
+        setIsFiltered(false);
+    }
+
+    useEffect(() => {
+        document.title = `Кол-во заметок: ${notes.length}`;
+    });
+
+
+
+    // function inputValue(e) {
+    //     setValue(e.target.value);
+    // }
+
+    // function remove(index) {
+    //     setData([...data.slice(0, index), ...data.slice(index + 1)]);
+    // }
+
+    // function changeValue(e) {         // изменение содержания поля input
+    //     setValue(e.target.value);
+    // }
+
+    // const edit = ({ value, setValue }) => {
+    // const onChange = (e) => setValue(e.target.value);
+    // return (
+    //     <input
+    //       type="text"
+    //       aria-label="Field name"
+    //       value={value}
+    //       onChange={onChange}
+    //     />
+    //   )
+    // }
+
+
+    //     //  function edit(e) {  
+    //     //                                         // редактирование элемента
+    //     //     setValue(
+    //     //        [
+    //     //           ...data.slice(0, editIndex), 
+    //     //           e.target.value,
+    //     //           ...data.slice(editIndex + 1)
+    //     //        ]
+    //     //     ); 
+    //     //     setEditIndex(null);
+    //     //  }
+
+
+    //     function changeValue(e) {            // изменение содержания поля input
+    //         setValue(e.target.value);
+    //     }
+
+    //     function handleActive(item) {
+    //         setValue(item);
+    //     };
 
 
         // const handleActive =item =>
@@ -129,31 +240,54 @@ function Form() {
 
 
         return (
-            <div>
-                <Post
-                    value={value}
-                    data={data}
-                    add={add}
-                    inputValue={inputValue}
-                    remove={remove}
-                    changeValue={changeValue}
-                    edit={edit}
-                    handleActive={handleActive}
-                    editIndex={editIndex}
-                    setEditIndex={setEditIndex}
-                //    note={note}
-                //    tag={tag}
-                //    handleChange={handleChange}
-                //    delHashtag={delHashtag}
-                //    delPost={delPost}
-                //    edit={edit}
-                //    handleSubmit={handleSubmit}
-                //    handleActive={handleActive}
-                //    searchTag={searchTag}
-                //    noteChange={noteChange}
-                />
-            </div>
-        );
+
+
+            <div className="app-container">
+            <h1> My test Application</h1>
+            <ListAddNote
+                onAdded={ AddNote }
+                isFiltered={ isFiltered }
+            />
+            <TagFilter
+                tags={ [...tags] }
+                isFiltered={ isFiltered }
+                onTagsFiltered={ FilterNotes }
+                onFilterReset={ ResetFilter }
+            />
+            <List
+                notes={ notes }
+                isFiltered={ isFiltered }
+                onDeletedTag = { DeleteTag }
+                onDeleted={ DeleteNote }
+                onEdited={ EditNote }
+            />
+        </div>
+    );
+        //     <div>
+        //         <Post
+        //             value={value}
+        //             data={data}
+        //             add={add}
+        //             inputValue={inputValue}
+        //             remove={remove}
+        //             changeValue={changeValue}
+        //             edit={edit}
+        //             handleActive={handleActive}
+        //             editIndex={editIndex}
+        //             setEditIndex={setEditIndex}
+        //         //    note={note}
+        //         //    tag={tag}
+        //         //    handleChange={handleChange}
+        //         //    delHashtag={delHashtag}
+        //         //    delPost={delPost}
+        //         //    edit={edit}
+        //         //    handleSubmit={handleSubmit}
+        //         //    handleActive={handleActive}
+        //         //    searchTag={searchTag}
+        //         //    noteChange={noteChange}
+        //         />
+        //     </div>
+        // );
 
 
     }
