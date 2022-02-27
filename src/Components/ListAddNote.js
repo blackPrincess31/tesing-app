@@ -21,7 +21,7 @@ const ListAddNote = ({ onAdded, isFiltered }) => {
 
     return (
         <form
-            className='add-note-container'
+            className='form'
             onSubmit={OnTextSubmitted}
         >
             <input

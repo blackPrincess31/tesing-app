@@ -17,15 +17,14 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
 
     const tagsFormatted = [];
     tags.forEach(item => tagsFormatted.push(
-            <div className="list-of-notes__tag-and-button">
+            <div className="list">
                 <span>{ item }</span>
-                <hr className="vertical-line" />
-                <button onClick={ onDeletedTag } value={ item }>delete_tag</button>
+                <button  className='btn' onClick={ onDeletedTag } value={ item }>delete_tag</button>
             </div>
         ));
 
     const tagsFormattedWithConditionalRendering = (tagsFormatted.length > 0) ?
-            <div className="list-of-notes__note-tags-container">
+            <div className="list">
                 { tagsFormatted }
             </div>
         :
@@ -34,11 +33,11 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
     if (isFiltered === false && isEditing === false) {
         return (
             <li className="list-of-notes__note">
-                <div className="list-of-notes__buttons-container">
-                    <button onClick={() => setIsEditing(true)}>edit</button>
-                    <button onClick={ onDeleted }>delete</button>
+                <div className="list">
+                    <button className='btn' onClick={() => setIsEditing(true)}>edit</button>
+                    <button className='btn' onClick={ onDeleted }>delete</button>
                 </div>
-                <p className="list-of-notes__note-text">{ note }</p>
+                <p className="list">{ note }</p>
                 <hr />
                 { tagsFormattedWithConditionalRendering }
             </li>
@@ -47,16 +46,16 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
 
     if (isFiltered === false && isEditing === true) {
         return (
-            <li className="list-of-notes__note">
+            <li className="list">
                 <form onSubmit={HandleSubmit}>
                 <textarea
                     placeholder="Type in new text here"
                     value={newTextOfNote}
                     onChange={HandleChange}
                 />
-                <div className="list-of-notes__note-edit-mode-buttons">
-                    <input className="btn" type="submit" value="Save"/>
-                    <button className="btn" onClick={() => setIsEditing(false)}>Cancel</button>
+                <div className="list">
+                    <input  type="submit" value="Save"/>
+                    <button onClick={() => setIsEditing(false)}>Cancel</button>
                 </div>
                 </form>
             </li>
@@ -68,10 +67,10 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
         tags.forEach(item => tagsFormattedWhenFiltered.push(<span>{ item }</span>));
 
         return (
-            <li className="list-of-notes__note">
-                <p className="list-of-notes__note-text">{ note }</p>
+            <li>
+                <p className="list">{ note }</p>
                 <hr />
-                <div className="list-of-notes__tagsWhenFiltered">
+                <div className="list">
                     { tagsFormattedWhenFiltered }
                 </div>
             </li>

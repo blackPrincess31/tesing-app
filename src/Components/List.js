@@ -21,7 +21,7 @@ function List ({ notes, isFiltered, onDeleted, onDeletedTag, onEdited }) {
 
         
     return (
-        <ul className="list-of-notes">
+        <ul className="list">
             { note }
         </ul>
     );

@@ -6,7 +6,7 @@ import ListAddNote from "./ListAddNote";
 
 function Form() {
 
-   const useLocalStorage = (key, defaultValue) => {
+    const useLocalStorage = (key, defaultValue) => {
 
         const [storedValue, setStoredValue] = useState(() => {
           try {
@@ -138,25 +138,12 @@ function Form() {
     useEffect(() => {
         document.title = `My_Notes: ${notes.length}`;
     });
-
-    // useEffect(() => {
-    //     localStorage.setItem('notes', JSON.stringify(notes));
-    //   }, [notes]);
-
-
-    //   useEffect(() => {
-    //     const note = JSON.parse(localStorage.getItem('notes'));
-    //     if (notes) {
-    //      setNotes(notes);
-    //     }
-    //   }, []);
-
   
         return (
 
-            <div className="app-container">
+            <div className="container">
             <h1> My test Application</h1>
-                     <ListAddNote
+             <ListAddNote
                 onAdded={ AddNote }
                 isFiltered={ isFiltered }
             />

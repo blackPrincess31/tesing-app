@@ -1,0 +1,58 @@
+$milk-white: #bdc3c7;
+$background: linear-gradient(blue, pink);
+$twenty: 20px;
+$marginLi: 40px 10px 0px 10px;
+
+.App {
+    text-align: center;
+     background: $background;
+      
+  } 
+
+
+.input {
+  padding: 10px;
+  margin: $twenty;
+  border-radius: 4px;
+}
+.form  {
+  margin: $twenty;
+}
+.btn{
+  background:$milk-white;
+  border-radius: 1rem;
+  padding:1rem;
+  bottom: $twenty;
+  float: right;
+}
+li{
+
+  border: 1px solid silver;
+  border-radius: 5px;
+  list-style-type: none;
+}
+.list{
+  color:black;
+  font-size:14px;
+  font-family:Georgia, Times, serif;
+  margin-right: 35px; 
+  flex-wrap: wrap; 
+}
+
+body {
+  background-color: $background;
+  font-family: sans-serif,serif;
+}
+.container {
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1000px;
+  min-height: 900px;
+}
+
+
+@media only screen and (max-width: 700px) {
+  .container {
+    background-color: rgb(180, 163, 240);
+  }
+}
