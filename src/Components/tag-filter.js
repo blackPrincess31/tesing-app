@@ -13,7 +13,7 @@ function TagFilter ({ tags, isFiltered, onTagsFiltered, onFilterReset }) {
         ));
     }
 
-    return <div className="tags">{tagsMapped}</div>;
+    return <div className='tags'>{tagsMapped}</div>;
 }
 
 export default TagFilter;

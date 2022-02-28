@@ -1,14 +1,12 @@
 $milk-white: #bdc3c7;
-$background: linear-gradient(blue, pink);
+$background: linear-gradient(rgb(73, 73, 230), pink);
 $twenty: 20px;
 $marginLi: 40px 10px 0px 10px;
 
 .App {
     text-align: center;
      background: $background;
-      
   } 
-
 
 .input {
   padding: 10px;
@@ -28,15 +26,10 @@ $marginLi: 40px 10px 0px 10px;
 li{
 
   border: 1px solid silver;
-  border-radius: 5px;
+  border-radius: 2px;
   list-style-type: none;
 }
-.list{
-  font-size:14px;
-  font-family:Georgia, Times, serif;
-  margin-right: 35px; 
-  flex-wrap: wrap; 
-}
+
 .tags{
     text-shadow:3px -2px 7px rgb(255, 0, 0); 
     text-align:center;
