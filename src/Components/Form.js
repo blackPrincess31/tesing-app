@@ -41,9 +41,9 @@ function Form() {
     
     const nanoid = customAlphabet('0123456789', 5);
     
-    notes.forEach(item =>
-        item.tags.forEach(item => tags.add(item))
-    );
+    // notes.forEach(item =>
+    //     item.tags.forEach(item => tags.add(item))
+    // );
         
     function ejectHashtagsFromText (text) {
 
