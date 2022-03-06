@@ -4,7 +4,7 @@ import ListItem from './List_Item';
 
 function List ({ notes, isFiltered, onDeleted, onDeletedTag, onEdited }) {
 
-    const note = notes.map(
+       const list_post = notes.map(
             ({ id, note, tags }) => 
             <ListItem
 
@@ -22,7 +22,7 @@ function List ({ notes, isFiltered, onDeleted, onDeletedTag, onEdited }) {
         
     return (
         <ul >
-            { note }
+            { list_post }
         </ul>
     );
 }
