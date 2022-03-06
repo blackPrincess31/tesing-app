@@ -33,7 +33,8 @@ function Form() {
         return [storedValue, setValue];
       };
 
-    const [notes, setNotes] = useLocalStorage('notes');
+
+    const [notes, setNotes] = useLocalStorage('notes',[]);
     const [isFiltered, setIsFiltered] = useState(false);
     const [notesBeforeFilter, setNotesBeforeFilter] = useState([]);
 
@@ -41,7 +42,8 @@ function Form() {
     
     const nanoid = customAlphabet('0123456789', 5);
     
-    const btn_notes = notes.forEach(item =>
+
+     notes.forEach(item =>
         item.tags.forEach(item => tags.add(item))
     );
         
@@ -154,7 +156,7 @@ function Form() {
                 onFilterReset={ ResetFilter }
             />
             <List
-                notes={ notes }
+                notes={notes}
                 isFiltered={ isFiltered }
                 onDeletedTag = { DeleteTag }
                 onDeleted={ DeleteNote }

@@ -2,8 +2,10 @@ import React from 'react';
 import ListItem from './List_Item';
 
 
+
 function List ({ notes, isFiltered, onDeleted, onDeletedTag, onEdited }) {
 
+    
        const list_post = notes.map(
             ({ id, note, tags }) => 
             <ListItem
