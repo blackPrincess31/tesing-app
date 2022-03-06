@@ -52,7 +52,7 @@ const ListItem = ({ id, note, tags, isFiltered, onDeleted, onDeletedTag, onEdite
             <li >
                 <form onSubmit={HandleSubmit}>
                     <textarea
-                        placeholder="Type in new text here"
+                        placeholder="new text "
                         value={newTextOfNote}
                         onChange={HandleChange}
                     />
